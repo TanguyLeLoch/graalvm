@@ -5,11 +5,16 @@ import com.natu.graalvm.domain.User;
 public class UserResponse {
     String id;
 
-    public UserResponse(User user) {
+    UserResponse(User user) {
         this.id = user.getId();
+    }
+
+    UserResponse() {
+        // for jackson
     }
 
     public String getId() {
         return id;
     }
+
 }

@@ -1,13 +1,19 @@
 package com.natu.graalvm.domain;
 
 public class User {
-    String id;
+    Long id;
+    String name;
 
-    public User(String id) {
+    public User(Long id, String name) {
         this.id = id;
+        this.name = name;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -1,20 +1,26 @@
 package com.natu.graalvm.presentation;
 
-import com.natu.graalvm.domain.User;
+import com.natu.graalvm.application.UserResource;
 
 public class UserResponse {
-    String id;
 
-    UserResponse(User user) {
-        this.id = user.getId();
+    UserResource userResource;
+
+    UserResponse(UserResource userResource) {
+        this.userResource = userResource;
     }
 
     UserResponse() {
         // for jackson
     }
 
-    public String getId() {
-        return id;
+    public Long getId() {
+        return userResource.getId();
     }
+
+    public String getName() {
+        return userResource.getName();
+    }
+
 
 }

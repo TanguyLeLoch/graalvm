@@ -1,8 +1,9 @@
 package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.User;
-import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -25,10 +26,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(String id) {
-        Document document = mongoTemplate.findById(id, Document.class, "user");
-        if (document == null) {
+        Query query = Query.query(Criteria.where("_id").is(id));
+        UserInfra userInfra = mongoTemplate.findOne(query, UserInfra.class);
+        if (userInfra != null) {
+            return Optional.of(new User(userInfra.getId(), userInfra.getName()));
+        } else {
             return Optional.empty();
         }
-        return Optional.of(new User(document.getString("_id"), document.getString("name")));
     }
 }

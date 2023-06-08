@@ -2,10 +2,10 @@ package com.natu.graalvm.it;
 
 public class UserResponseTest {
 
-    Long id;
+    String id;
     String name;
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 

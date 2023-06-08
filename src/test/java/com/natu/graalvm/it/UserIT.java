@@ -39,7 +39,7 @@ public class UserIT {
     public void getNotExistingUserShouldReturn404() {
         UserClient userClient = getUserClient();
         try {
-            userClient.get(-999L);
+            userClient.get("invalid id");
         } catch (FeignException e) {
             assertEquals(404, e.status());
         }
@@ -48,7 +48,7 @@ public class UserIT {
     @Headers("Content-Type: application/json")
     public interface UserClient {
         @RequestLine("GET /{id}")
-        UserResponseTest get(@Param("id") Long id);
+        UserResponseTest get(@Param("id") String id);
 
         @RequestLine("POST ?{parameters}")
         UserResponseTest create(@QueryMap Map<String, String> parameters);

@@ -1,12 +1,15 @@
 package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.User;
-import org.bson.Document;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "user")
+public class UserInfra {
 
 
-public class UserInfra extends Document {
-
+    @Id
     String id;
 
     String name;

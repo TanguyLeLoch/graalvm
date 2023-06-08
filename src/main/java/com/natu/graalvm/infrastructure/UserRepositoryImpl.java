@@ -18,12 +18,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User insert(User user) {
-        Document userToSave = new Document();
-        userToSave.put("_id", user.getId());
-        userToSave.put("name", user.getName());
-        Document saved = mongoTemplate.insert(userToSave, "user");
-        String id = saved.getObjectId("_id").toString();
-        return new User(id, saved.getString("name"));
+        UserInfra userInfra = new UserInfra(user);
+        UserInfra saved = mongoTemplate.insert(userInfra);
+        return saved.toDomain();
     }
 
     @Override

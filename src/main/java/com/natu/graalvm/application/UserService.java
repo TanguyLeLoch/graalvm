@@ -20,4 +20,9 @@ public class UserService {
         User userCreated = userRepository.createUser(user);
         return new UserResource(userCreated);
     }
+
+    public UserResource getUser(Long id) {
+        User user = userRepository.getUser(id);
+        return new UserResource(user);
+    }
 }

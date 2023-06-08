@@ -4,4 +4,6 @@ import com.natu.graalvm.domain.User;
 
 public interface UserRepository {
     User createUser(User user);
+
+    User getUser(Long id);
 }

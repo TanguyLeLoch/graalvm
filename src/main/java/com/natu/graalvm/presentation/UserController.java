@@ -3,7 +3,6 @@ package com.natu.graalvm.presentation;
 import com.natu.graalvm.MyService;
 import com.natu.graalvm.application.UserResource;
 import com.natu.graalvm.application.UserService;
-import com.natu.graalvm.domain.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,11 +17,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public UserResponse getUser() {
-        String hello = myService.hello();
-        System.out.println(hello);
-        return new UserResponse(new UserResource(new User(34L, "test")));
+    @GetMapping("/{id}")
+    public UserResponse getUser(@PathVariable Long id) {
+        UserResource userResource = userService.getUser(id);
+        return new UserResponse(userResource);
     }
 
     @PostMapping()

@@ -1,41 +1,37 @@
 package com.natu.graalvm.infrastructure;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.natu.graalvm.domain.User;
-import com.natu.graalvm.presentation.NotFoundException;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 
+@Component
 public class UserRepositoryImpl implements UserRepository {
 
-    private final MongoClient mongoClient;
+    private final MongoTemplate mongoTemplate;
 
-    private final MongoDatabase userDatabase;
-    private final MongoCollection<Document> collection;
-
-
-    public UserRepositoryImpl(MongoClient mongoClient) {
-        this.mongoClient = mongoClient;
-        String databaseName = "graalvm";
-        this.userDatabase = mongoClient.getDatabase(databaseName);
-        this.collection = userDatabase.getCollection("user");
-    }
-
-    public User createUser(User user) {
-        UserInfra userDocument = new UserInfra(user);
-        collection.insertOne(userDocument);
-
-        return userDocument.toDomain();
+    UserRepositoryImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
-    public User getUser(Long id) {
-        UserInfra document = (UserInfra) collection.find(new Document("id", id)).first();
+    public User insert(User user) {
+        Document userToSave = new Document();
+        userToSave.put("_id", user.getId());
+        userToSave.put("name", user.getName());
+        Document saved = mongoTemplate.insert(userToSave, "user");
+        String id = saved.getObjectId("_id").toString();
+        return new User(id, saved.getString("name"));
+    }
+
+    @Override
+    public Optional<User> findById(String id) {
+        Document document = mongoTemplate.findById(id, Document.class, "user");
         if (document == null) {
-            throw new NotFoundException("User {0} not found", id);
+            return Optional.empty();
         }
-        return document.toDomain();
+        return Optional.of(new User(document.getString("_id"), document.getString("name")));
     }
 }

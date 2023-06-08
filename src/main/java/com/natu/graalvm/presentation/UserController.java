@@ -18,7 +18,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserResponse getUser(@PathVariable Long id) {
+    public UserResponse getUser(@PathVariable String id) {
         UserResource userResource = userService.getUser(id);
         return new UserResponse(userResource);
     }

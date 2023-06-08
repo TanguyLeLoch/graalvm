@@ -14,7 +14,7 @@ public class UserResponse {
         // for jackson
     }
 
-    public Long getId() {
+    public String getId() {
         return userResource.getId();
     }
 

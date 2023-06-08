@@ -2,8 +2,12 @@ package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.User;
 
-public interface UserRepository {
-    User createUser(User user);
+import java.util.Optional;
 
-    User getUser(Long id);
+
+public interface UserRepository {
+
+    User insert(User user);
+
+    Optional<User> findById(String id);
 }

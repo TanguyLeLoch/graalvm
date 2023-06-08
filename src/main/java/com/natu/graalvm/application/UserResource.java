@@ -10,7 +10,7 @@ public class UserResource {
         this.user = user;
     }
 
-    public Long getId() {
+    public String getId() {
         return user.getId();
     }
 

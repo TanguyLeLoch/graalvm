@@ -2,11 +2,12 @@ package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.User;
 import org.bson.Document;
+import org.springframework.data.annotation.PersistenceCreator;
 
 
 public class UserInfra extends Document {
 
-    Long id;
+    String id;
 
     String name;
 
@@ -16,11 +17,13 @@ public class UserInfra extends Document {
         this.name = user.getName();
     }
 
-    public UserInfra() {
-
+    @PersistenceCreator
+    public UserInfra(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

@@ -1,15 +1,11 @@
 package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.User;
-import jakarta.persistence.*;
+import org.bson.Document;
 
 
-@Entity
-@Table(name = "User", schema = "public")
-public class UserInfra {
+public class UserInfra extends Document {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;

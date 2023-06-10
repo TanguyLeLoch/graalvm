@@ -1,11 +1,11 @@
 package com.natu.graalvm.domain.transaction.core.port;
 
+import com.natu.graalvm.domain.common.exception.NotFoundException;
 import com.natu.graalvm.domain.transaction.core.model.AddTransactionCommand;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.AddNewTransaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.RetrieveTransaction;
 import com.natu.graalvm.domain.transaction.core.port.outgoing.TransactionDatabase;
-import com.natu.graalvm.presentation.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.natu.graalvm.presentation;
+package com.natu.graalvm.domain.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

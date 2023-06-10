@@ -8,10 +8,6 @@ public class TransactionResponse {
         this.transaction = transaction;
     }
 
-    TransactionResponse() {
-        // for jackson
-    }
-
     public String getHash() {
         return transaction.getHash();
     }

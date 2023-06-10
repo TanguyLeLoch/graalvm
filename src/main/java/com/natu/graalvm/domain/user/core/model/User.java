@@ -1,4 +1,4 @@
-package com.natu.graalvm.domain;
+package com.natu.graalvm.domain.user.core.model;
 
 public class User {
     String address;

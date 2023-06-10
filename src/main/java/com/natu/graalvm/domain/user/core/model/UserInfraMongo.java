@@ -1,21 +1,20 @@
-package com.natu.graalvm.infrastructure.user;
+package com.natu.graalvm.domain.user.core.model;
 
-import com.natu.graalvm.domain.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
-public class UserInfra {
+public class UserInfraMongo {
     @Id
     String address;
 
-    public UserInfra(User user) {
+    public UserInfraMongo(User user) {
         this.address = user.getAddress();
     }
 
     @PersistenceCreator
-    public UserInfra(String address) {
+    public UserInfraMongo(String address) {
         this.address = address;
     }
 

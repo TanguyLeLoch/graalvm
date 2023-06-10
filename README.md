@@ -1,6 +1,4 @@
-Certainly! Here's the README in Markdown format:
 
-```markdown
 # GraalVM Test
 
 This project aims to utilize GraalVM to run Java code natively on the host machine. It also serves as a platform for enhancing knowledge and proficiency in hexagonal architecture and Domain-Driven Design (DDD) principles.

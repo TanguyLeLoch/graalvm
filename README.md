@@ -43,7 +43,7 @@ Once the project is successfully built, you can run it as follows:
 ./target/graalvm
 ```
 
-This command will execute the application using GraalVM, leveraging the native compilation capabilities.
+This command will execute the application as an executable file. It should be much more efficient than JVM.
 
 ## Contributing
 

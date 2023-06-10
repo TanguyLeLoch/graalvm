@@ -3,11 +3,11 @@ package com.natu.graalvm.domain.user.infrastructure;
 import com.natu.graalvm.domain.user.core.model.User;
 import com.natu.graalvm.domain.user.core.model.UserInfraMongo;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Component
+@Repository
 public class UserRepository {
 
     private final MongoTemplate mongoTemplate;

@@ -3,11 +3,11 @@ package com.natu.graalvm.domain.transaction.infrastructure;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.model.TransactionInfraMongo;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Component
+@Repository
 public class TransactionRepository {
 
     private final MongoTemplate mongoTemplate;

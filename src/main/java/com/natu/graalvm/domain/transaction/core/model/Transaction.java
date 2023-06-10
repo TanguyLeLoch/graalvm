@@ -1,4 +1,4 @@
-package com.natu.graalvm.domain;
+package com.natu.graalvm.domain.transaction.core.model;
 
 public class Transaction {
     String hash;

@@ -1,4 +1,4 @@
-package com.natu.graalvm;
+package com.natu.graalvm.infrastructure;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration(proxyBeanMethods = false)
 @ComponentScan(basePackages = "com.natu")
-public class Config {
+public class MongoConfig {
 
     @Value("${mongo.uri}")
     private String mongoUri;

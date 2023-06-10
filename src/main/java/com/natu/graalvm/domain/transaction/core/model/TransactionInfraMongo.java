@@ -1,21 +1,20 @@
-package com.natu.graalvm.infrastructure.transaction;
+package com.natu.graalvm.domain.transaction.core.model;
 
-import com.natu.graalvm.domain.Transaction;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "transaction")
-public class TransactionInfra {
+public class TransactionInfraMongo {
     @Id
     String hash;
 
-    public TransactionInfra(Transaction transaction) {
+    public TransactionInfraMongo(Transaction transaction) {
         this.hash = transaction.getHash();
     }
 
     @PersistenceCreator
-    public TransactionInfra(String hash) {
+    public TransactionInfraMongo(String hash) {
         this.hash = hash;
     }
 

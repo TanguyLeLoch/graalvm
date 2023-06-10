@@ -1,6 +1,6 @@
-package com.natu.graalvm.presentation;
+package com.natu.graalvm.presentation.user;
 
-import com.natu.graalvm.application.UserResource;
+import com.natu.graalvm.application.user.UserResource;
 
 public class UserResponse {
 

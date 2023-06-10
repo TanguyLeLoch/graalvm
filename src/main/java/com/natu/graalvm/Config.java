@@ -19,12 +19,6 @@ public class Config {
     @Value("${mongo.database}")
     private String mongoDatabase;
 
-
-    @Bean
-    public MyService myService() {
-        return new MyService();
-    }
-
     @Bean
     public MongoClient mongo() {
         ConnectionString connectionString = new ConnectionString(mongoUri);
@@ -39,7 +33,7 @@ public class Config {
     public MongoTemplate mongoTemplate(MongoClient mongoClient) {
         MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, mongoDatabase);
         if (mongoDatabase.endsWith("test")) {
-            mongoTemplate.dropCollection("user");
+            mongoTemplate.getDb().drop();
         }
         return mongoTemplate;
     }

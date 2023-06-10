@@ -1,19 +1,16 @@
-package com.natu.graalvm.presentation;
+package com.natu.graalvm.presentation.user;
 
-import com.natu.graalvm.MyService;
-import com.natu.graalvm.application.UserResource;
-import com.natu.graalvm.application.UserService;
+import com.natu.graalvm.application.user.UserResource;
+import com.natu.graalvm.application.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    MyService myService;
     UserService userService;
 
-    public UserController(MyService myService, UserService userService) {
-        this.myService = myService;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

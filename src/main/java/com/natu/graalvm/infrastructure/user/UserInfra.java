@@ -1,4 +1,4 @@
-package com.natu.graalvm.infrastructure;
+package com.natu.graalvm.infrastructure.user;
 
 import com.natu.graalvm.domain.User;
 import org.springframework.data.annotation.Id;

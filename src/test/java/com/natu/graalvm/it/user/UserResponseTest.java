@@ -1,4 +1,4 @@
-package com.natu.graalvm.it;
+package com.natu.graalvm.it.user;
 
 public class UserResponseTest {
 

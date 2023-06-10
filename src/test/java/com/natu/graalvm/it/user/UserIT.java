@@ -1,12 +1,10 @@
-package com.natu.graalvm.it;
+package com.natu.graalvm.it.user;
 
-import com.natu.graalvm.GraalvmApplication;
+import com.natu.graalvm.it.AbstractIT;
 import feign.*;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,13 +12,8 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
-public class UserIT {
+public class UserIT extends AbstractIT {
 
-    @BeforeAll
-    public static void setUp() {
-        GraalvmApplication.main(new String[]{});
-    }
 
     @Test
     public void createUser() {
@@ -60,6 +53,6 @@ public class UserIT {
         return Feign.builder()
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(UserClient.class, "http://localhost:9000/user");
+                .target(UserClient.class, "http://localhost:" + serverPort + "/user");
     }
 }

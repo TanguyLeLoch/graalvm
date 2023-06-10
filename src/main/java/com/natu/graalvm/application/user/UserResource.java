@@ -1,4 +1,4 @@
-package com.natu.graalvm.application;
+package com.natu.graalvm.application.user;
 
 import com.natu.graalvm.domain.User;
 

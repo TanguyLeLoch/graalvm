@@ -1,7 +1,7 @@
-package com.natu.graalvm.application;
+package com.natu.graalvm.application.user;
 
 import com.natu.graalvm.domain.User;
-import com.natu.graalvm.infrastructure.UserRepository;
+import com.natu.graalvm.infrastructure.user.UserRepository;
 import com.natu.graalvm.presentation.NotFoundException;
 import org.springframework.stereotype.Service;
 

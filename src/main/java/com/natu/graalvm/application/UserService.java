@@ -15,16 +15,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserResource createUser(String name) {
+    public UserResource createUser(String address) {
 
-        User user = new User(null, name);
+        User user = new User(address);
         User userCreated = userRepository.insert(user);
         return new UserResource(userCreated);
     }
 
-    public UserResource getUser(String id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User {0} not found", id));
+    public UserResource getUser(String address) {
+        User user = userRepository.findByAddress(address)
+                .orElseThrow(() -> new NotFoundException("User {0} not found", address));
         return new UserResource(user);
     }
 }

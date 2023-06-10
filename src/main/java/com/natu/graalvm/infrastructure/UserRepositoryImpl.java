@@ -25,11 +25,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String id) {
-        Query query = Query.query(Criteria.where("_id").is(id));
+    public Optional<User> findByAddress(String address) {
+        Query query = Query.query(Criteria.where("_id").is(address));
         UserInfra userInfra = mongoTemplate.findOne(query, UserInfra.class);
         if (userInfra != null) {
-            return Optional.of(new User(userInfra.getId(), userInfra.getName()));
+            return Optional.of(userInfra.toDomain());
         } else {
             return Optional.empty();
         }

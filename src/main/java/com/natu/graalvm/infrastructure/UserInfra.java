@@ -7,34 +7,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
 public class UserInfra {
-
-
     @Id
-    String id;
-
-    String name;
-
+    String address;
 
     public UserInfra(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
+        this.address = user.getAddress();
     }
 
     @PersistenceCreator
-    public UserInfra(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public UserInfra(String address) {
+        this.address = address;
     }
 
     public User toDomain() {
-        return new User(id, name);
+        return new User(address);
     }
 }

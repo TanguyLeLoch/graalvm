@@ -10,12 +10,9 @@ public class UserResource {
         this.user = user;
     }
 
-    public String getId() {
-        return user.getId();
+    public String getAddress() {
+        return user.getAddress();
     }
 
-    public String getName() {
-        return user.getName();
-    }
 
 }

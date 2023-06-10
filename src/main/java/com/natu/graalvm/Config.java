@@ -36,8 +36,12 @@ public class Config {
     }
 
     @Bean
-    public MongoTemplate mongoTemplate(MongoClient mongoClient) throws Exception {
-        return new MongoTemplate(mongoClient, "graalvm");
+    public MongoTemplate mongoTemplate(MongoClient mongoClient) {
+        MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, mongoDatabase);
+        if (mongoDatabase.endsWith("test")) {
+            mongoTemplate.dropCollection("user");
+        }
+        return mongoTemplate;
     }
 }
 

@@ -14,12 +14,8 @@ public class UserResponse {
         // for jackson
     }
 
-    public String getId() {
-        return userResource.getId();
-    }
-
-    public String getName() {
-        return userResource.getName();
+    public String getAddress() {
+        return userResource.getAddress();
     }
 
 

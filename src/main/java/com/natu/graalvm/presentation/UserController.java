@@ -17,14 +17,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public UserResponse getUser(@PathVariable String id) {
-        UserResource userResource = userService.getUser(id);
+    @GetMapping("/{address}")
+    public UserResponse getUser(@PathVariable String address) {
+        UserResource userResource = userService.getUser(address);
         return new UserResponse(userResource);
     }
 
     @PostMapping()
-    public UserResponse createUser(@RequestParam String name) {
-        return new UserResponse(userService.createUser(name));
+    public UserResponse createUser(@RequestParam String address) {
+        UserResource userResource = userService.createUser(address);
+        return new UserResponse(userResource);
     }
 }

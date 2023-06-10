@@ -2,14 +2,9 @@ package com.natu.graalvm.it;
 
 public class UserResponseTest {
 
-    String id;
-    String name;
+    String address;
 
-    public String getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
+    public String getAddress() {
+        return this.address;
     }
 }

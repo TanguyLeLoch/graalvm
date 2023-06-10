@@ -26,11 +26,12 @@ public class UserIT {
     public void createUser() {
         UserClient userClient = getUserClient();
         Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put("name", "new user");
+        String address = "0x1ED7F11679A47aC259FB7DD86A862A92bf0523e0";
+        parameters.put("address", address);
         UserResponseTest userResponse = userClient.create(parameters);
-        assertEquals("new user", userResponse.getName());
+        assertEquals(address, userResponse.getAddress());
 
-        UserResponseTest userResponseGet = userClient.get(userResponse.getId());
+        UserResponseTest userResponseGet = userClient.get(userResponse.getAddress());
 
         assertThat(userResponseGet).usingRecursiveComparison().isEqualTo(userResponse);
     }

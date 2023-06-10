@@ -1,19 +1,13 @@
 package com.natu.graalvm.domain;
 
 public class User {
-    String id;
-    String name;
+    String address;
 
-    public User(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public User(String address) {
+        this.address = address;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public String getAddress() {
+        return address;
     }
 }

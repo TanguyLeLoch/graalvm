@@ -9,5 +9,5 @@ public interface UserRepository {
 
     User insert(User user);
 
-    Optional<User> findById(String id);
+    Optional<User> findByAddress(String address);
 }

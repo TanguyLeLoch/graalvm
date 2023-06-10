@@ -16,7 +16,7 @@ enhancing knowledge and proficiency in hexagonal architecture and Domain-Driven 
 - [Java Development Kit (JDK) 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
 - [GraalVM](https://www.graalvm.org/downloads/) (latest version)
 - [Apache Maven](https://maven.apache.org/download.cgi) (latest version)
-- [mongoDb](https://www.mongodb.com/) running on default port 5432
+- [mongoDb](https://www.mongodb.com/) running (url should be set in application.properties)
 
 ## Getting Started
 

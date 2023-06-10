@@ -1,13 +1,15 @@
-
 # GraalVM Test
 
-This project aims to utilize GraalVM to run Java code natively on the host machine. It also serves as a platform for enhancing knowledge and proficiency in hexagonal architecture and Domain-Driven Design (DDD) principles.
+This project aims to utilize GraalVM to run Java code natively on the host machine. It also serves as a platform for
+enhancing knowledge and proficiency in hexagonal architecture and Domain-Driven Design (DDD) principles.
 
 ## Features
 
 - **GraalVM Integration:** Explore the capabilities of GraalVM for native execution of Java code.
-- **Hexagonal Architecture:** Implement the application using a hexagonal architecture pattern to achieve modularity and separation of concerns.
-- **Domain-Driven Design (DDD):** Apply DDD principles to design the core domain model and create a rich, expressive business logic layer.
+- **Hexagonal Architecture:** Implement the application using a hexagonal architecture pattern to achieve modularity and
+  separation of concerns.
+- **Domain-Driven Design (DDD):** Apply DDD principles to design the core domain model and create a rich, expressive
+  business logic layer.
 
 ## Prerequisites
 
@@ -55,7 +57,8 @@ Contributions are welcome! If you want to contribute to this project, please fol
 4. Commit and push your changes to your forked repository.
 5. Submit a pull request, clearly describing the changes you've made.
 
-Please ensure that your contributions adhere to the existing coding style and include appropriate tests and documentation.
+Please ensure that your contributions adhere to the existing coding style and include appropriate tests and
+documentation.
 
 ## License
 
@@ -63,7 +66,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-We would like to express our gratitude to the following resources and projects that have inspired and influenced this work:
+We would like to express our gratitude to the following resources and projects that have inspired and influenced this
+work:
 
 - [GraalVM Documentation](https://www.graalvm.org/documentation/)
 - [Hexagonal Architecture by Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)
@@ -73,4 +77,3 @@ We would like to express our gratitude to the following resources and projects t
 ## Contact
 
 For any questions or feedback, please feel free to reach out to lelochtanguy@gmail.com.
-```

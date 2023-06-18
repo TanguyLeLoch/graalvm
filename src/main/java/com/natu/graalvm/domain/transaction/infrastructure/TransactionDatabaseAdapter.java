@@ -3,6 +3,7 @@ package com.natu.graalvm.domain.transaction.infrastructure;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.port.outgoing.TransactionDatabase;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TransactionDatabaseAdapter implements TransactionDatabase {
@@ -21,5 +22,10 @@ public class TransactionDatabaseAdapter implements TransactionDatabase {
     @Override
     public Optional<Transaction> findByHash(String hash) {
         return repository.findByHash(hash);
+    }
+
+    @Override
+    public List<Transaction> findByUserAddress(String address) {
+        return repository.findByFromOrTo(address);
     }
 }

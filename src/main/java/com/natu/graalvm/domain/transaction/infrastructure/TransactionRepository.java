@@ -3,16 +3,18 @@ package com.natu.graalvm.domain.transaction.infrastructure;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.model.TransactionInfraMongo;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-@Repository
 public class TransactionRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    TransactionRepository(MongoTemplate mongoTemplate) {
+    public TransactionRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
@@ -29,5 +31,17 @@ public class TransactionRepository {
         } else {
             return Optional.empty();
         }
+    }
+
+    public List<Transaction> findByFromOrTo(String address) {
+        Criteria from = Criteria.where("from").is(address);
+        Criteria to = Criteria.where("to").is(address);
+        Query query = Query.query(new Criteria().orOperator(from, to));
+        List<TransactionInfraMongo> transactionInfraMongoList = mongoTemplate.find(query, TransactionInfraMongo.class);
+        List<Transaction> transactions = new ArrayList<>(transactionInfraMongoList.stream()
+                .map(TransactionInfraMongo::toDomain)
+                .toList());
+        transactions.sort((t1, t2) -> Math.toIntExact(t2.getBlockNumber() - t1.getBlockNumber()));
+        return transactions;
     }
 }

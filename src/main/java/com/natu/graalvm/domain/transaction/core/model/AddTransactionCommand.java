@@ -7,4 +7,7 @@ import lombok.Getter;
 @Builder
 public class AddTransactionCommand {
     String hash;
+    String from;
+    String to;
+    long blockNumber;
 }

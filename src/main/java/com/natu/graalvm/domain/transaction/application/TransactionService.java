@@ -15,7 +15,10 @@ public class TransactionService {
     }
 
     public void addNewTransaction(AddTransactionCommand command) {
-        addNewTransaction.handle(command);
+        addNewTransaction.fromCommand(command);
     }
 
+    public void addNewTransactionFromBlockchain(String address) {
+        addNewTransaction.newFromBlockchain(address);
+    }
 }

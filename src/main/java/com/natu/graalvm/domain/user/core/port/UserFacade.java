@@ -20,10 +20,11 @@ public class UserFacade implements AddNewUser, RetrieveUser {
     }
 
     @Override
-    public void handle(AddUserCommand command) {
+    public User handle(AddUserCommand command) {
         User user = new User(command.getAddress());
-        User savedTx = database.save(user);
-        LOGGER.info("User saved: {}", savedTx.getAddress());
+        User savedUser = database.save(user);
+        LOGGER.info("User saved: {}", savedUser.getAddress());
+        return savedUser;
     }
 
     @Override

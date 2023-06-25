@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "transaction")
+@Document(collection = "transactions")
 public class TransactionInfraMongo {
     @Id
     String hash;

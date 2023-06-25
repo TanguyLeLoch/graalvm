@@ -6,7 +6,7 @@ import com.natu.graalvm.domain.transaction.core.port.incomming.RetrieveTransacti
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 public class TransactionController {
 
     private final RetrieveTransaction retrieveTransaction;

@@ -120,7 +120,7 @@ public class TransactionIT extends AbstractIT {
         return given()
                 .pathParam("hash", hash)
                 .when()
-                .get("/transaction/{hash}")
+                .get("/transactions/{hash}")
                 .then()
                 .statusCode(200)
                 .extract().as(TransactionResponseTest.class);

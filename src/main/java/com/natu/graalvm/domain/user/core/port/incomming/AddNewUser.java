@@ -1,7 +1,8 @@
 package com.natu.graalvm.domain.user.core.port.incomming;
 
 import com.natu.graalvm.domain.user.core.model.AddUserCommand;
+import com.natu.graalvm.domain.user.core.model.User;
 
 public interface AddNewUser {
-    void handle(AddUserCommand command);
+    User handle(AddUserCommand command);
 }

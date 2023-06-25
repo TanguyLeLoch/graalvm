@@ -5,9 +5,11 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Getter
-public class EtherscanResponse {
+public abstract class EtherscanResponse<T extends AbstractEtherscanResult> {
+    @Getter
     int status;
+    @Getter
     String message;
-    List<EtherscanTx> result;
+    List<T> result;
+
 }

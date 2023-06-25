@@ -20,7 +20,7 @@ public class TransactionRepository {
 
     public Transaction insert(Transaction transaction) {
         TransactionInfraMongo transactionInfraMongo = new TransactionInfraMongo(transaction);
-        TransactionInfraMongo saved = mongoTemplate.insert(transactionInfraMongo);
+        TransactionInfraMongo saved = mongoTemplate.save(transactionInfraMongo);
         return saved.toDomain();
     }
 

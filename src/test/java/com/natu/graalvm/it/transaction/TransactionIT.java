@@ -6,8 +6,8 @@ import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import com.natu.graalvm.domain.transaction.application.TransactionService;
-import com.natu.graalvm.domain.transaction.core.model.AddTransactionCommand;
 import com.natu.graalvm.domain.transaction.infrastructure.EtherscanApi;
+import com.natu.graalvm.domain.transaction.infrastructure.FileScanner;
 import com.natu.graalvm.it.AbstractIT;
 import com.natu.graalvm.it.FileReader;
 import com.natu.graalvm.it.WireMockConfig;
@@ -24,7 +24,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalToIgnoreCase;
@@ -40,12 +42,14 @@ public class TransactionIT extends AbstractIT {
     private final TransactionService transactionService;
     private final WireMockServer mockEtherscanService;
     private final String apiKey;
+    private final FileScanner fileScanner;
 
     @Autowired
-    public TransactionIT(TransactionService transactionService, WireMockServer mockEtherscanService, @Value("${etherscan.apikey}") String apiKey) {
+    public TransactionIT(TransactionService transactionService, WireMockServer mockEtherscanService, @Value("${etherscan.apikey}") String apiKey, FileScanner fileScanner) {
         this.transactionService = transactionService;
         this.mockEtherscanService = mockEtherscanService;
         this.apiKey = apiKey;
+        this.fileScanner = fileScanner;
     }
 
     @BeforeEach
@@ -60,18 +64,6 @@ public class TransactionIT extends AbstractIT {
     @AfterEach
     public void tearDown() {
         mockEtherscanService.stop();
-    }
-
-    @Test
-    public void createTransaction() {
-        String hash = "0xe12a531d1ba228532b34920bfc2bc01b58f72c7268bf74f042457dcf840d9913";
-        AddTransactionCommand command = AddTransactionCommand.builder()
-                .hash(hash)
-                .build();
-        transactionService.addNewTransaction(command);
-
-        TransactionResponseTest transactionResponseGet = getTransaction(hash);
-        assertThat(transactionResponseGet.getHash()).isEqualTo(hash);
     }
 
     @Test
@@ -103,7 +95,16 @@ public class TransactionIT extends AbstractIT {
         mockEtherscanService.addStubMapping(stubMapping);
         transactionService.addNewTransactionFromBlockchain(address);
 
+        TransactionResponseTest transactionResponseGet = getTransaction("0xHashOfTx-1");
+        assertThat(transactionResponseGet.getHash()).isNotBlank();
+    }
 
+    @Test
+    public void getExistingTransactionFromCsvFile() {
+        URL resource = getClass().getClassLoader().getResource("csvFiles/export-test.csv");
+        fileScanner.getFileListener().processFile(new File(resource.getFile()));
+        TransactionResponseTest transactionResponseGet = getTransaction("0xHash-of-export-test-dot-csv-tx1");
+        assertThat(transactionResponseGet.getHash()).isNotBlank();
     }
 
     private static ResponseDefinition getResponseFromFile(String filePath) throws IOException {

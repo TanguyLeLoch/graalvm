@@ -1,8 +1,10 @@
 package com.natu.graalvm.domain.transaction.application;
 
-import com.natu.graalvm.domain.transaction.core.model.AddTransactionCommand;
+import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.AddNewTransaction;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -14,11 +16,17 @@ public class TransactionService {
         this.addNewTransaction = addNewTransaction;
     }
 
-    public void addNewTransaction(AddTransactionCommand command) {
-        addNewTransaction.fromCommand(command);
+    public void addNewTransactionFromBlockchain(String address) {
+        addNewTransaction.fromBlockchain(address);
     }
 
-    public void addNewTransactionFromBlockchain(String address) {
-        addNewTransaction.newFromBlockchain(address);
+    public void ingestTransactionsFromCsv(List<Transaction> transactions) {
+        addNewTransaction.fromCsvRecord(transactions);
+    }
+
+    public void retrieveTxFromUsers(List<String> address) {
+        for (String addr : address) {
+            addNewTransactionFromBlockchain(addr);
+        }
     }
 }

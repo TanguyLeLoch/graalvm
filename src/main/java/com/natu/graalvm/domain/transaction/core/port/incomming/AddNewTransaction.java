@@ -1,9 +1,12 @@
 package com.natu.graalvm.domain.transaction.core.port.incomming;
 
-import com.natu.graalvm.domain.transaction.core.model.AddTransactionCommand;
+import com.natu.graalvm.domain.transaction.core.model.Transaction;
+
+import java.util.List;
 
 public interface AddNewTransaction {
-    void fromCommand(AddTransactionCommand command);
+    void fromCsvRecord(List<Transaction> transactions);
 
-    void newFromBlockchain(String address);
+    void fromBlockchain(String address);
+
 }

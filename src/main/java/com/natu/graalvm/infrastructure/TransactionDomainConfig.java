@@ -4,6 +4,7 @@ import com.natu.graalvm.domain.transaction.core.port.TransactionFacade;
 import com.natu.graalvm.domain.transaction.core.port.incomming.AddNewTransaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.RetrieveTransaction;
 import com.natu.graalvm.domain.transaction.core.port.outgoing.Blockchain;
+import com.natu.graalvm.domain.transaction.core.port.outgoing.EventDatabase;
 import com.natu.graalvm.domain.transaction.core.port.outgoing.TransactionDatabase;
 import com.natu.graalvm.domain.transaction.infrastructure.TransactionDatabaseAdapter;
 import com.natu.graalvm.domain.transaction.infrastructure.TransactionRepository;
@@ -22,13 +23,15 @@ public class TransactionDomainConfig {
     }
 
     @Bean
-    public AddNewTransaction addNewTransaction(TransactionDatabase transactionDatabase, Blockchain blockchain) {
-        return new TransactionFacade(transactionDatabase, blockchain);
+    public AddNewTransaction addNewTransaction(
+            TransactionDatabase transactionDatabase, Blockchain blockchain, EventDatabase eventDatabase) {
+        return new TransactionFacade(transactionDatabase, blockchain, eventDatabase);
     }
 
     @Bean
-    public RetrieveTransaction retrieveTransaction(TransactionDatabase transactionDatabase, Blockchain blockchain) {
-        return new TransactionFacade(transactionDatabase, blockchain);
+    public RetrieveTransaction retrieveTransaction(
+            TransactionDatabase transactionDatabase, Blockchain blockchain, EventDatabase eventDatabase) {
+        return new TransactionFacade(transactionDatabase, blockchain, eventDatabase);
     }
 
 

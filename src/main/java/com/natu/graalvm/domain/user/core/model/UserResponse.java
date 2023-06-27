@@ -1,5 +1,8 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import java.util.List;
+import java.util.Map;
+
 public class UserResponse {
 
     User user;
@@ -12,5 +15,16 @@ public class UserResponse {
         return user.getAddress();
     }
 
+    public String getStatus() {
+        return user.getStatus();
+    }
+
+    public List<Pair> getPairs() {
+        return user.getPairs();
+    }
+
+    public Map<String, Balance> getBalances() {
+        return user.getBalances();
+    }
 
 }

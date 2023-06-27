@@ -15,8 +15,9 @@ public class Transaction {
     private final ContractCall contractCall;
     private final List<Log> logs;
     private final String index;
+    private final long timestamp;
 
-    public Transaction(String hash, String from, String to, long blockNumber, Status status, ContractCall contractCall, List<Log> logs, String index) {
+    public Transaction(String hash, String from, String to, long blockNumber, Status status, ContractCall contractCall, List<Log> logs, String index, long timestamp) {
         this.hash = hash;
         this.from = from;
         this.to = to;
@@ -25,10 +26,11 @@ public class Transaction {
         this.contractCall = contractCall;
         this.logs = logs;
         this.index = index;
+        this.timestamp = timestamp;
 
     }
 
-    public Transaction(String hash, String from, String to, long blockNumber, String index) {
+    public Transaction(String hash, String from, String to, long blockNumber, String index, long timestamp) {
         this.hash = hash;
         this.from = from;
         this.to = to;
@@ -37,6 +39,7 @@ public class Transaction {
         this.contractCall = null;
         this.logs = new ArrayList<>();
         this.index = index;
+        this.timestamp = timestamp;
     }
 
     public void addLog(Log log) {

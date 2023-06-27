@@ -22,7 +22,7 @@ public class EtherscanTx extends AbstractEtherscanResult {
 
 
     public Transaction toDomain() {
-        Transaction tx = new Transaction(this.hash, this.from, this.to, Long.parseLong(this.blockNumber), this.transactionIndex);
+        Transaction tx = new Transaction(this.hash, this.from, this.to, Long.parseLong(this.blockNumber), this.transactionIndex, Long.parseLong(this.timeStamp));
         tx.fetch();
         return tx;
     }

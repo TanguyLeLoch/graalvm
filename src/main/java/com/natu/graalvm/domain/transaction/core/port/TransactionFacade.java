@@ -78,25 +78,27 @@ public class TransactionFacade implements AddNewTransaction, RetrieveTransaction
     }
 
     @Override
-    public void handleRequest(ProfitRequest request) {
+    public List<Transaction> handleRequest(ProfitRequest request) {
         List<Transaction> txs = blockchain.getTransactions(request.address());
         List<Log> logs = blockchain.getTransactionLogs(request.pair(), List.of(SWAP_TOPIC));
         Map<String, List<Log>> logGroupedByHash = new HashMap<>();
         for (Log log : logs) {
             logGroupedByHash.computeIfAbsent(log.getTransactionHash(), k -> new ArrayList<>()).add(log);
         }
-
+        List<Transaction> swapTxs = new ArrayList<>();
         for (Transaction tx : txs) {
             List<Log> logByHash = logGroupedByHash.get(tx.getHash());
             if (logByHash != null) {
                 for (Log log : logByHash) {
                     LOGGER.info("Transaction {} is a swap", tx.getHash());
                     tx.addLog(log);
+                    swapTxs.add(tx);
                 }
             }
         }
         for (Transaction tx : txs) {
             saveTx(tx);
         }
+        return swapTxs;
     }
 }

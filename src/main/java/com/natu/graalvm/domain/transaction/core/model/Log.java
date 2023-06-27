@@ -23,19 +23,12 @@ public class Log {
         this.swap = swap;
     }
 
-    static class Swap {
+    public Swap getSwap() {
+        return swap;
+    }
 
-        private final BigInteger amount0In;
-        private final BigInteger amount1In;
-        private final BigInteger amount0Out;
-        private final BigInteger amount1Out;
+    public record Swap(BigInteger amount0In, BigInteger amount1In, BigInteger amount0Out, BigInteger amount1Out) {
 
-        public Swap(BigInteger amount0In, BigInteger amount1In, BigInteger amount0Out, BigInteger amount1Out) {
-            this.amount0In = amount0In;
-            this.amount1In = amount1In;
-            this.amount0Out = amount0Out;
-            this.amount1Out = amount1Out;
-        }
     }
 
 }

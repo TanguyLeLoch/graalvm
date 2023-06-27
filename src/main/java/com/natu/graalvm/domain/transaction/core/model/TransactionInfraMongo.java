@@ -18,6 +18,7 @@ public class TransactionInfraMongo {
     ContractCall contractCall;
     List<Log> logs;
     String index;
+    long timestamp;
 
 
     public TransactionInfraMongo(Transaction transaction) {
@@ -29,10 +30,11 @@ public class TransactionInfraMongo {
         this.contractCall = transaction.getContractCall();
         this.logs = transaction.getLogs();
         this.index = transaction.getIndex();
+        this.timestamp = transaction.getTimestamp();
     }
 
     @PersistenceCreator
-    public TransactionInfraMongo(String hash, String from, String to, Long blockNumber, String status, ContractCall contractCall, List<Log> logs, String index) {
+    public TransactionInfraMongo(String hash, String from, String to, Long blockNumber, String status, ContractCall contractCall, List<Log> logs, String index, long timestamp) {
         this.hash = hash;
         this.from = from;
         this.to = to;
@@ -41,10 +43,11 @@ public class TransactionInfraMongo {
         this.contractCall = contractCall;
         this.logs = logs;
         this.index = index;
+        this.timestamp = timestamp;
     }
 
     public Transaction toDomain() {
         return new Transaction(hash, from, to, blockNumber,
-                Transaction.Status.valueOf(status), contractCall, logs, index);
+                Transaction.Status.valueOf(status), contractCall, logs, index, timestamp);
     }
 }

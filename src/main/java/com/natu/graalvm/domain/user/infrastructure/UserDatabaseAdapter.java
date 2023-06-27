@@ -14,8 +14,13 @@ public class UserDatabaseAdapter implements UserDatabase {
     }
 
     @Override
-    public User save(User user) {
+    public User insert(User user) {
         return repository.insert(user);
+    }
+
+    @Override
+    public User update(User user) {
+        return repository.update(user);
     }
 
     @Override

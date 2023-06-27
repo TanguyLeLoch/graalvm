@@ -1,10 +1,9 @@
 package com.natu.graalvm.it.user;
 
+import lombok.Getter;
+
+@Getter
 public class UserResponseTest {
-
     String address;
-
-    public String getAddress() {
-        return this.address;
-    }
+    String status;
 }

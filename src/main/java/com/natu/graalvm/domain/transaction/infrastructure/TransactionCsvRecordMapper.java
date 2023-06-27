@@ -25,8 +25,6 @@ public class TransactionCsvRecordMapper {
         return new Transaction(csvRecord.get(HASH_INDEX),
                 csvRecord.get(FROM_INDEX),
                 csvRecord.get(TO_INDEX),
-                Long.parseLong(csvRecord.get(BLOCK_NUMBER_INDEX)), null);
+                Long.parseLong(csvRecord.get(BLOCK_NUMBER_INDEX)), null, 0L);
     }
-
-
 }

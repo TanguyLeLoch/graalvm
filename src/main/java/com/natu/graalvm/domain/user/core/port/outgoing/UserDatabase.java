@@ -5,7 +5,9 @@ import com.natu.graalvm.domain.user.core.model.User;
 import java.util.Optional;
 
 public interface UserDatabase {
-    User save(User user);
+    User insert(User user);
+
+    User update(User user);
 
     Optional<User> findByAddress(String address);
 }

@@ -2,6 +2,7 @@ package com.natu.graalvm.infrastructure;
 
 import com.natu.graalvm.domain.user.core.port.UserFacade;
 import com.natu.graalvm.domain.user.core.port.incomming.AddNewUser;
+import com.natu.graalvm.domain.user.core.port.incomming.AlterUser;
 import com.natu.graalvm.domain.user.core.port.incomming.RetrieveUser;
 import com.natu.graalvm.domain.user.core.port.outgoing.UserDatabase;
 import com.natu.graalvm.domain.user.infrastructure.UserDatabaseAdapter;
@@ -26,6 +27,11 @@ public class UserDomainConfig {
 
     @Bean
     public RetrieveUser retrieveUser(UserDatabase userDatabase) {
+        return new UserFacade(userDatabase);
+    }
+
+    @Bean
+    public AlterUser alterUser(UserDatabase userDatabase) {
         return new UserFacade(userDatabase);
     }
 }

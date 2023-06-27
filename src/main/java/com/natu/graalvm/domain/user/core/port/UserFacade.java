@@ -2,7 +2,6 @@ package com.natu.graalvm.domain.user.core.port;
 
 import com.natu.graalvm.domain.common.exception.NotFoundException;
 import com.natu.graalvm.domain.user.core.model.AddPairCommand;
-import com.natu.graalvm.domain.user.core.model.AddUserCommand;
 import com.natu.graalvm.domain.user.core.model.User;
 import com.natu.graalvm.domain.user.core.port.incomming.AddNewUser;
 import com.natu.graalvm.domain.user.core.port.incomming.AlterUser;
@@ -22,8 +21,13 @@ public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
     }
 
     @Override
-    public User handle(AddUserCommand command) {
-        User user = new User(command.getAddress());
+    public User handleGetOrCreate(String address) {
+        return database.findByAddress(address).orElse(
+                createNewUser(address));
+    }
+
+    private User createNewUser(String address) {
+        User user = new User(address);
         User savedUser = database.insert(user);
         LOGGER.info("User saved: {}", savedUser.getAddress());
         return savedUser;

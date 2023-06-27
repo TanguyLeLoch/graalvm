@@ -1,7 +1,6 @@
 package com.natu.graalvm.domain.user.application;
 
 import com.natu.graalvm.domain.user.core.model.AddPairCommand;
-import com.natu.graalvm.domain.user.core.model.AddUserCommand;
 import com.natu.graalvm.domain.user.core.model.User;
 import com.natu.graalvm.domain.user.core.model.UserResponse;
 import com.natu.graalvm.domain.user.core.port.incomming.AddNewUser;
@@ -31,9 +30,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping()
-    public UserResponse getUser(@RequestBody AddUserCommand command) {
-        User user = addNewUser.handle(command);
+    @PostMapping("/{address}")
+    public UserResponse getOrCreate(@PathVariable String address) {
+        User user = addNewUser.handleGetOrCreate(address);
         return new UserResponse(user);
     }
 
@@ -50,13 +49,12 @@ public class UserController {
 
     @PostMapping("/{userAddress}/computePnl")
     public Map<String, BigDecimal> computePnl(@PathVariable String userAddress) {
-        Map<String, BigDecimal> balances = userService.computePnl(userAddress);
-        return balances;
+        return userService.computePnl(userAddress);
     }
 
     @ExceptionHandler(Exception.class)
-    public String handleError(Exception ex) {
+    public String handleError(Exception ex) throws Exception {
         log.error("Error: ", ex);
-        return ex.getMessage();
+        throw ex;
     }
 }

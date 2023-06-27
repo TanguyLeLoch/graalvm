@@ -14,10 +14,8 @@ public class UserIT extends AbstractIT {
 
         given()
                 .contentType("application/json")
-                .body("{\"address\": \"" + address + "\"}")
                 .when()
-                .post("/users")
-
+                .post("/users/{address}", address)
                 .then()
                 .statusCode(200);
 

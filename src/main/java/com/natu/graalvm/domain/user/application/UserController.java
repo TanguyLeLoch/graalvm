@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("users")
 @Slf4j
 public class UserController {
 
@@ -35,6 +35,7 @@ public class UserController {
         User user = addNewUser.handleGetOrCreate(address);
         return new UserResponse(user);
     }
+
 
     @GetMapping("/{address}")
     public UserResponse getUser(@PathVariable String address) {

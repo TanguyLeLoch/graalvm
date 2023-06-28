@@ -6,6 +6,9 @@ public class AddPairCommand {
     String token0;
     String token1;
 
+    public AddPairCommand() {
+    }
+
     public AddPairCommand(String pairAddress, String token0, String token1) {
         this.pairAddress = pairAddress.toLowerCase();
         token0 = token0.toLowerCase();
@@ -22,5 +25,17 @@ public class AddPairCommand {
 
     public Pair toPair() {
         return new Pair(pairAddress, token0, token1);
+    }
+
+    public String getPairAddress() {
+        return pairAddress;
+    }
+
+    public String getToken0() {
+        return token0;
+    }
+
+    public String getToken1() {
+        return token1;
     }
 }

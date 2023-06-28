@@ -22,8 +22,7 @@ public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
 
     @Override
     public User handleGetOrCreate(String address) {
-        return database.findByAddress(address).orElse(
-                createNewUser(address));
+        return database.findByAddress(address).orElseGet(() -> createNewUser(address));
     }
 
     private User createNewUser(String address) {

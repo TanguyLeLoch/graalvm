@@ -1,5 +1,6 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import com.natu.graalvm.domain.common.exception.FunctionalException;
 import com.natu.graalvm.domain.common.exception.NotFoundException;
 import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.transaction.core.model.Log;
@@ -26,6 +27,17 @@ public class User {
         this.status = status;
         this.pairs = pairs;
         this.balances = balances;
+        checkUniquePair();
+    }
+
+    private void checkUniquePair() {
+        Set<String> pairAddresses = new HashSet<>();
+        for (Pair pair : pairs) {
+            if (pairAddresses.contains(pair.getPairAddress())) {
+                throw new FunctionalException("Pair address must be unique");
+            }
+            pairAddresses.add(pair.getPairAddress());
+        }
     }
 
     public String getAddress() {
@@ -38,10 +50,6 @@ public class User {
 
     public List<Pair> getPairs() {
         return Collections.unmodifiableList(pairs);
-    }
-
-    public void addPair(Pair pair) {
-        pairs.add(pair);
     }
 
     public Map<String, Balance> getBalances() {

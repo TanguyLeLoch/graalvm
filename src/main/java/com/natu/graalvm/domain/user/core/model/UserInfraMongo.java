@@ -1,5 +1,6 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import com.natu.graalvm.domain.common.exception.FunctionalException;
 import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.user.core.port.outgoing.RetrievePair;
 import org.springframework.data.annotation.Id;
@@ -41,6 +42,11 @@ public class UserInfraMongo {
     }
 
     public void addPair(String pairAddress) {
+        for (String pair : pairs) {
+            if (pair.equals(pairAddress)) {
+                throw new FunctionalException("Pair address must be unique");
+            }
+        }
         this.pairs.add(pairAddress);
     }
 

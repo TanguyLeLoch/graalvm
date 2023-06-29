@@ -44,8 +44,13 @@ public class UserController {
     }
 
     @PostMapping("/{userAddress}/pair")
-    public void addTokenToUser(@PathVariable String userAddress, @RequestBody AddPairCommand command) {
-        alterUser.addPair(userAddress, command);
+    public UserResponse addPairToUser(@PathVariable String userAddress, @RequestBody AddPairCommand command) {
+        return new UserResponse(alterUser.addPair(userAddress, command));
+    }
+
+    @DeleteMapping("/{userAddress}/pair/{pairAddress}")
+    public UserResponse removePairToUser(@PathVariable String userAddress, @PathVariable String pairAddress) {
+        return new UserResponse(alterUser.removePair(userAddress, pairAddress));
     }
 
     @PostMapping("/{userAddress}/computePnl")

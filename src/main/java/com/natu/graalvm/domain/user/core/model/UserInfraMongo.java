@@ -43,4 +43,8 @@ public class UserInfraMongo {
     public void addPair(String pairAddress) {
         this.pairs.add(pairAddress);
     }
+
+    public void removePair(String pairAddress) {
+        this.pairs.remove(pairAddress);
+    }
 }

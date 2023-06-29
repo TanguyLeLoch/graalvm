@@ -12,4 +12,6 @@ public interface UserDatabase {
     User update(User user);
 
     Optional<User> findByAddress(String address);
+
+    User removePair(User user, String pairAddress);
 }

@@ -41,15 +41,26 @@ public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
     }
 
     @Override
-    public void addPair(String userAddress, AddPairCommand command) {
+    public User addPair(String userAddress, AddPairCommand command) {
         User user = database.findByAddress(userAddress).orElseThrow(
                 () -> new NotFoundException("User {0} not found", userAddress));
-        database.addPair(user, command.getPairAddress());
+        User userSaved = database.addPair(user, command.getPairAddress());
         LOGGER.info("Pair added to user: {}", userAddress);
+        return userSaved;
+    }
+
+    @Override
+    public User removePair(String userAddress, String pairAddress) {
+        User user = database.findByAddress(userAddress).orElseThrow(
+                () -> new NotFoundException("User {0} not found", userAddress));
+        User userSaved = database.removePair(user, pairAddress);
+        LOGGER.info("Pair removed from user: {}", userAddress);
+        return userSaved;
     }
 
     @Override
     public User update(User user) {
         return database.update(user);
     }
+
 }

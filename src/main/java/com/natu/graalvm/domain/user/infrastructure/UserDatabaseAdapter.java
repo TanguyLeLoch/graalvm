@@ -25,6 +25,14 @@ public class UserDatabaseAdapter implements UserDatabase {
     }
 
     @Override
+    public User removePair(User user, String pairAddress) {
+        UserInfraMongo userInfraMongo = new UserInfraMongo(user);
+        userInfraMongo.removePair(pairAddress);
+        UserInfraMongo userInfraMongoSaved = repository.update(userInfraMongo);
+        return userInfraMongoSaved.toDomain(retrievePair);
+    }
+
+    @Override
     public User insert(User user) {
         UserInfraMongo userInfraMongo = new UserInfraMongo(user);
         UserInfraMongo saved = repository.insert(userInfraMongo);

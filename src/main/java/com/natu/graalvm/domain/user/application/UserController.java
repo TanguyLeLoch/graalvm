@@ -58,9 +58,14 @@ public class UserController {
         return userService.computePnl(userAddress);
     }
 
-    @ExceptionHandler(Exception.class)
-    public String handleError(Exception ex) throws Exception {
-        log.error("Error: ", ex);
-        throw ex;
-    }
+//    @ExceptionHandler(FunctionalException.class)
+//    public String handleFunctional(FunctionalException ex) throws Exception {
+//        return ex.getMessage();
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public String handleError(Exception ex) throws Exception {
+//        log.error("Error: ", ex);
+//        throw ex;
+//    }
 }

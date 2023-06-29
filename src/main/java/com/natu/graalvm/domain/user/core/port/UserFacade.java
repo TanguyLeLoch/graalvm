@@ -44,8 +44,7 @@ public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
     public void addPair(String userAddress, AddPairCommand command) {
         User user = database.findByAddress(userAddress).orElseThrow(
                 () -> new NotFoundException("User {0} not found", userAddress));
-        user.addPair(command.toPair());
-        database.update(user);
+        database.addPair(user, command.getPairAddress());
         LOGGER.info("Pair added to user: {}", userAddress);
     }
 

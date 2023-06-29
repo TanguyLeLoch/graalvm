@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface UserDatabase {
     User insert(User user);
 
+    User addPair(User user, String pairAddress);
+
     User update(User user);
 
     Optional<User> findByAddress(String address);

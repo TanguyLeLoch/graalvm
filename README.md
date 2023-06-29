@@ -72,7 +72,6 @@ work:
 - [GraalVM Documentation](https://www.graalvm.org/documentation/)
 - [Hexagonal Architecture by Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)
 - [Domain-Driven Design by Eric Evans](https://domainlanguage.com/ddd/)
-- [Open Source Frameworks and Libraries Used (List them here)]
 
 ## Contact
 

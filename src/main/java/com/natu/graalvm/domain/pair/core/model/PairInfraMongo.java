@@ -11,11 +11,11 @@ public class PairInfraMongo {
 
     @Id
     String pairAddress;
-    Pair.Token token0;
-    Pair.Token token1;
+    Token token0;
+    Token token1;
 
     @PersistenceCreator
-    public PairInfraMongo(String pairAddress, Pair.Token token0, Pair.Token token1) {
+    public PairInfraMongo(String pairAddress, Token token0, Token token1) {
         this.pairAddress = pairAddress;
         this.token0 = token0;
         this.token1 = token1;

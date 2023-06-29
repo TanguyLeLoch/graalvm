@@ -32,9 +32,9 @@ public class MongoConfig {
     @Bean
     public MongoTemplate mongoTemplate(MongoClient mongoClient) {
         MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, mongoDatabase);
-//        if (mongoDatabase.endsWith("test")) {
-        mongoTemplate.getDb().drop();
-//        }
+        if (mongoDatabase.endsWith("test")) {
+            mongoTemplate.getDb().drop();
+        }
         return mongoTemplate;
     }
 }

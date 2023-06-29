@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -24,7 +23,7 @@ public class RetrievePairAdapter implements RetrievePair {
 
     @Override
     public Optional<Pair> findByAddress(String address) {
-        Pair Response = pairClient.findByAddress(baseUrl, Map.of("pairAddress", address));
-        return Optional.ofNullable(Response);
+        Pair response = pairClient.findByAddress(baseUrl, address);
+        return Optional.ofNullable(response);
     }
 }

@@ -1,9 +1,9 @@
 package com.natu.graalvm.domain.transaction.application;
 
+import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.AddNewTransaction;
 import com.natu.graalvm.domain.transaction.core.port.incomming.RetrieveTransaction;
-import com.natu.graalvm.domain.user.core.model.Pair;
 import com.natu.graalvm.domain.user.core.model.User;
 import org.springframework.stereotype.Service;
 

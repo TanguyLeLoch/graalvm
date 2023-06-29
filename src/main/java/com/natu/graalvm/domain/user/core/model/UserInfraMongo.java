@@ -1,5 +1,7 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import com.natu.graalvm.domain.pair.core.model.Pair;
+import com.natu.graalvm.domain.pair.core.model.PairInfraMongo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.Document;

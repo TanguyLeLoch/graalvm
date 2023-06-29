@@ -1,5 +1,7 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import com.natu.graalvm.domain.pair.core.model.Pair;
+
 import java.util.List;
 import java.util.Map;
 

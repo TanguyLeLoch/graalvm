@@ -1,7 +1,7 @@
 package com.natu.graalvm.it.user;
 
+import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.user.core.model.Balance;
-import com.natu.graalvm.domain.user.core.model.Pair;
 import lombok.Getter;
 
 import java.util.List;

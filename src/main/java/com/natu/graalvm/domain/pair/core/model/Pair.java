@@ -1,4 +1,4 @@
-package com.natu.graalvm.domain.user.core.model;
+package com.natu.graalvm.domain.pair.core.model;
 
 import lombok.Getter;
 
@@ -9,13 +9,13 @@ public class Pair {
     Token token0;
     Token token1;
 
-    Pair(String pairAddress, String token0, String token1) {
+    public Pair(String pairAddress, String token0, String token1) {
         this.pairAddress = pairAddress;
         this.token0 = new Token(token0, "", "", 18);
         this.token1 = new Token(token1, "", "", 18);
     }
 
-    Pair(String pairAddress, Token token0, Token token1) {
+    public Pair(String pairAddress, Token token0, Token token1) {
         this.pairAddress = pairAddress;
         this.token0 = token0;
         this.token1 = token1;

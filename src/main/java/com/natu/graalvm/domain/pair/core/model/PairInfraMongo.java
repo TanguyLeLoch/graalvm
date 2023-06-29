@@ -1,11 +1,15 @@
-package com.natu.graalvm.domain.user.core.model;
+package com.natu.graalvm.domain.pair.core.model;
 
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
+@Document(collection = "pairs")
 public class PairInfraMongo {
 
+    @Id
     String pairAddress;
     Pair.Token token0;
     Pair.Token token1;
@@ -23,7 +27,7 @@ public class PairInfraMongo {
         this.token1 = pair.getToken1();
     }
 
-    Pair toDomain() {
+    public Pair toDomain() {
         return new Pair(pairAddress, token0, token1);
     }
 }

@@ -1,6 +1,7 @@
 package com.natu.graalvm.domain.user.core.model;
 
 import com.natu.graalvm.domain.common.exception.NotFoundException;
+import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.transaction.core.model.Log;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 

@@ -1,13 +1,12 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import com.natu.graalvm.domain.pair.core.model.Pair;
+
 public class AddPairCommand {
 
     String pairAddress;
     String token0;
     String token1;
-
-    public AddPairCommand() {
-    }
 
     public AddPairCommand(String pairAddress, String token0, String token1) {
         this.pairAddress = pairAddress.toLowerCase();

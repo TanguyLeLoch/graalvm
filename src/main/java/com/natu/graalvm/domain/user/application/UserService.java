@@ -36,7 +36,7 @@ public class UserService {
 
         Map<String, BigDecimal> pnl = new HashMap<>();
         for (Map.Entry<String, Balance> entry : savedUser.getBalances().entrySet()) {
-            // cnvert to BigDecimal to avoid overflow
+            // convert to BigDecimal to avoid overflow
             BigDecimal balance = new BigDecimal(entry.getValue().getBalance());
             BigDecimal inDecimal = balance.divide(new BigDecimal(10).pow(18));
             pnl.put(entry.getKey(), inDecimal);

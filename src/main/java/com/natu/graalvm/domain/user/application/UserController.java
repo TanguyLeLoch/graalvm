@@ -1,5 +1,7 @@
 package com.natu.graalvm.domain.user.application;
 
+import com.natu.graalvm.domain.common.exception.FunctionalException;
+import com.natu.graalvm.domain.pair.application.EthAddressValidator;
 import com.natu.graalvm.domain.user.core.model.AddPairCommand;
 import com.natu.graalvm.domain.user.core.model.User;
 import com.natu.graalvm.domain.user.core.model.UserResponse;
@@ -7,14 +9,17 @@ import com.natu.graalvm.domain.user.core.port.incomming.AddNewUser;
 import com.natu.graalvm.domain.user.core.port.incomming.AlterUser;
 import com.natu.graalvm.domain.user.core.port.incomming.RetrieveUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
 @RequestMapping("users")
 @Slf4j
+@Validated
 public class UserController {
 
     private final RetrieveUser retrieveUser;
@@ -44,7 +49,10 @@ public class UserController {
     }
 
     @PostMapping("/{userAddress}/pair")
-    public UserResponse addPairToUser(@PathVariable String userAddress, @RequestBody AddPairCommand command) {
+    public UserResponse addPairToUser(@PathVariable String userAddress, @Valid @RequestBody AddPairCommand command) {
+        if (!EthAddressValidator.isValid(command.getPairAddress())) {
+            throw new FunctionalException("Invalid address");
+        }
         return new UserResponse(alterUser.addPair(userAddress, command));
     }
 
@@ -53,7 +61,7 @@ public class UserController {
         return new UserResponse(alterUser.removePair(userAddress, pairAddress));
     }
 
-    @PostMapping("/{userAddress}/computePnl")
+    @PostMapping("/{userAddress}/pnl")
     public Map<String, BigDecimal> computePnl(@PathVariable String userAddress) {
         return userService.computePnl(userAddress);
     }

@@ -52,6 +52,7 @@ public class EtherscanApi implements Blockchain {
     }
 
 
+    @Override
     public List<Log> getTransactionLogs(String contractAddress, List<String> topics) {
         if (topics.size() != 1) {
             throw new RuntimeException("Only one topic supported now");

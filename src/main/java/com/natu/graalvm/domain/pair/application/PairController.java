@@ -1,10 +1,14 @@
 package com.natu.graalvm.domain.pair.application;
 
+import com.natu.graalvm.domain.common.exception.FunctionalException;
 import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.pair.core.port.incomming.AddNewPair;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
+@Validated
 @RestController
 @RequestMapping("pairs")
 @Slf4j
@@ -18,9 +22,13 @@ public class PairController {
 
     }
 
+
     @PostMapping("/{address}")
-    public Pair getOrCreate(@PathVariable String address) {
-        return addNewPair.handleGetOrCreate(address);
+    public Pair getOrCreate(@PathVariable @EthAddress() String address) {
+        if (!EthAddressValidator.isValid(address)) {
+            throw new FunctionalException("Invalid address");
+        }
+        return addNewPair.handleGetOrCreate(address.toLowerCase());
     }
 
 

@@ -6,14 +6,11 @@ import com.natu.graalvm.domain.pair.core.port.incomming.AddNewPair;
 import com.natu.graalvm.domain.pair.core.port.outgoing.Blockchain;
 import com.natu.graalvm.domain.pair.core.port.outgoing.PairDatabase;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class PairFacade implements AddNewPair {
     private final PairDatabase database;
     private final Blockchain blockchain;
-    private static final Logger LOGGER = LoggerFactory.getLogger(PairFacade.class);
 
     public PairFacade(PairDatabase database, Blockchain blockchain) {
         this.database = database;
@@ -29,7 +26,7 @@ public class PairFacade implements AddNewPair {
         Pair pair = blockchain.getPair(address).orElseThrow(
                 () -> new NotFoundException("Pair not found in blockchain")
         );
-
+        blockchain.getTxLog("0x4dedd0f2c200413a2f4f45753b87da9bb2e45095e407b40d4314108009b25909");
         return database.insert(pair);
     }
 

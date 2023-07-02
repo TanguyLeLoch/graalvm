@@ -14,9 +14,11 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthCall;
+import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Async;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,26 @@ public class We3jApi implements Blockchain {
         Token token0 = getToken0(address);
         Token token1 = getToken1(address);
         return Optional.of(new Pair(address, token0, token1));
+    }
+
+    @Override
+    public void getTxLog(String txHash) {
+        try {
+            getTxLogThrowingException(txHash);
+        } catch (ExecutionException | InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void getTxLogThrowingException(String txHash) throws ExecutionException, InterruptedException, IOException {
+        EthGetTransactionReceipt transactionReceipt = this.web3j.ethGetTransactionReceipt(txHash).send();
+        if (transactionReceipt.getTransactionReceipt().isPresent()) {
+            transactionReceipt.getResult().getLogs().forEach(log -> {
+                System.out.println(log.getType());
+                System.out.println(log.getData());
+                System.out.println(log.getTopics());
+            });
+        }
     }
 
     private Token getToken0(String address) {

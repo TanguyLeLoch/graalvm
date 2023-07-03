@@ -3,7 +3,8 @@ package com.natu.graalvm.domain.common;
 
 import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.pair.core.model.Token;
-import com.natu.graalvm.domain.pair.core.port.outgoing.Blockchain;
+import com.natu.graalvm.domain.transaction.core.model.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.web3j.abi.FunctionEncoder;
@@ -15,49 +16,74 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthCall;
 import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Async;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Component
-public class We3jApi implements Blockchain {
+@Slf4j
+public class Web3jApi {
 
     private final Web3j web3j;
+    private final static String SWAP_TOPIC = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822";
 
-    We3jApi() {
+
+    Web3jApi() {
         this.web3j = Web3j.build(new HttpService("https://ethereum.publicnode.com"), 1000, Async.defaultExecutorService());
     }
 
-    @Override
     public Optional<Pair> getPair(String address) {
         Token token0 = getToken0(address);
         Token token1 = getToken1(address);
         return Optional.of(new Pair(address, token0, token1));
     }
 
-    @Override
-    public void getTxLog(String txHash) {
+    public List<Log> getTransactionLogs(String txHash) {
         try {
-            getTxLogThrowingException(txHash);
+            return getTxLogThrowingException(txHash);
         } catch (ExecutionException | InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void getTxLogThrowingException(String txHash) throws ExecutionException, InterruptedException, IOException {
+    private List<Log> getTxLogThrowingException(String txHash) throws ExecutionException, InterruptedException, IOException {
         EthGetTransactionReceipt transactionReceipt = this.web3j.ethGetTransactionReceipt(txHash).send();
-        if (transactionReceipt.getTransactionReceipt().isPresent()) {
-            transactionReceipt.getResult().getLogs().forEach(log -> {
-                System.out.println(log.getType());
-                System.out.println(log.getData());
-                System.out.println(log.getTopics());
-            });
+        if (transactionReceipt.getTransactionReceipt().isEmpty()) {
+            log.error("Transaction receipt is empty for txHash: {}", txHash);
+            return List.of();
         }
+
+        TransactionReceipt result = transactionReceipt.getTransactionReceipt().get();
+        List<Log> logs = new ArrayList<>();
+        for (org.web3j.protocol.core.methods.response.Log log : result.getLogs()) {
+            String txIndex = result.getTransactionIndex().toString();
+            String address = log.getAddress();
+            List<String> topics = log.getTopics();
+            String data = log.getData();
+            Log.Swap swap = null;
+            if (topics.contains(SWAP_TOPIC)) {
+                String dataHex = data.split("0x")[1];
+                String amount0In = dataHex.substring(0, 64);
+                String amount1In = dataHex.substring(64, 128);
+                String amount0Out = dataHex.substring(128, 192);
+                String amount1Out = dataHex.substring(192, 256);
+                swap = new Log.Swap(hexToBigInteger(amount0In), hexToBigInteger(amount1In),
+                        hexToBigInteger(amount0Out), hexToBigInteger(amount1Out));
+                logs.add(new Log(txHash, txIndex, address, topics, data, swap));
+            }
+        }
+        return logs;
+    }
+
+    private BigInteger hexToBigInteger(String hex) {
+        return new BigInteger(hex, 16);
     }
 
     private Token getToken0(String address) {

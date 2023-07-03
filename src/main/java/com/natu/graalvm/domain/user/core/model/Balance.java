@@ -1,5 +1,7 @@
 package com.natu.graalvm.domain.user.core.model;
 
+import org.springframework.data.annotation.PersistenceCreator;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ public class Balance {
     private final String tokenAddress;
     private final List<Operation> operations;
 
+    @PersistenceCreator
     Balance(String tokenAddress, List<Operation> operations) {
         this.tokenAddress = tokenAddress;
         this.operations = operations;

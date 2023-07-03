@@ -9,4 +9,5 @@ public interface AddNewTransaction {
 
     void fromBlockchain(String address);
 
+    void addLogToUserTransactions(String userAddress);
 }

@@ -1,7 +1,7 @@
 package com.natu.graalvm.domain.user.core.port;
 
 import com.natu.graalvm.domain.common.exception.NotFoundException;
-import com.natu.graalvm.domain.user.core.model.AddPairCommand;
+import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.user.core.model.User;
 import com.natu.graalvm.domain.user.core.port.incomming.AddNewUser;
 import com.natu.graalvm.domain.user.core.port.incomming.AlterUser;
@@ -10,6 +10,11 @@ import com.natu.graalvm.domain.user.core.port.outgoing.UserDatabase;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
@@ -41,10 +46,35 @@ public class UserFacade implements AddNewUser, RetrieveUser, AlterUser {
     }
 
     @Override
-    public User addPair(String userAddress, AddPairCommand command) {
+    public User addPair(String userAddress, String pairAddress) {
         User user = database.findByAddress(userAddress).orElseThrow(
                 () -> new NotFoundException("User {0} not found", userAddress));
-        User userSaved = database.addPair(user, command.getPairAddress());
+        for (Pair pair : user.getPairs()) {
+            if (pair.getPairAddress().equals(pairAddress)) {
+                LOGGER.info("Pair already added to user: {}", userAddress);
+                return user;
+            }
+        }
+        User userSaved = database.addPair(user, pairAddress);
+        LOGGER.info("Pair added to user: {}", userAddress);
+        return userSaved;
+    }
+
+    @Override
+    public User addPairs(String userAddress, Set<String> pairs) {
+        User user = database.findByAddress(userAddress).orElseThrow(
+                () -> new NotFoundException("User {0} not found", userAddress));
+        List<String> pairsToAdd = new ArrayList<>();
+        for (String pairAddress : pairs) {
+            Set<String> userPairs = user.getPairs().stream()
+                    .map(Pair::getPairAddress)
+                    .collect(Collectors.toSet());
+
+            if (!userPairs.contains(pairAddress)) {
+                pairsToAdd.add(pairAddress);
+            }
+        }
+        User userSaved = database.addPairs(user, pairsToAdd);
         LOGGER.info("Pair added to user: {}", userAddress);
         return userSaved;
     }

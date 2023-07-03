@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/{address}")
     public UserResponse getOrCreate(@PathVariable String address) {
-        User user = addNewUser.handleGetOrCreate(address);
+        User user = addNewUser.handleGetOrCreate(address.toLowerCase());
         return new UserResponse(user);
     }
 
@@ -53,12 +53,22 @@ public class UserController {
         if (!EthAddressValidator.isValid(command.getPairAddress())) {
             throw new FunctionalException("Invalid address");
         }
-        return new UserResponse(alterUser.addPair(userAddress, command));
+        return new UserResponse(alterUser.addPair(userAddress, command.getPairAddress()));
     }
 
     @DeleteMapping("/{userAddress}/pair/{pairAddress}")
     public UserResponse removePairToUser(@PathVariable String userAddress, @PathVariable String pairAddress) {
         return new UserResponse(alterUser.removePair(userAddress, pairAddress));
+    }
+
+    @PostMapping("/{userAddress}/analyse")
+    public Map<String, BigDecimal> startAnalyse(@PathVariable String userAddress) {
+        // TODO use event + an object to store the state of the analyse
+        userAddress = userAddress.toLowerCase();
+        userService.fetchTransactions(userAddress);
+        userService.addLogToTransaction(userAddress);
+        userService.addPairToUser(userAddress);
+        return userService.computePnl(userAddress);
     }
 
     @PostMapping("/{userAddress}/pnl")

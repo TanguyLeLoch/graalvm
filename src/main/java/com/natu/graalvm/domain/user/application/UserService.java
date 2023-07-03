@@ -1,5 +1,7 @@
 package com.natu.graalvm.domain.user.application;
 
+import com.natu.graalvm.domain.common.exception.NotFoundException;
+import com.natu.graalvm.domain.pair.core.model.Pair;
 import com.natu.graalvm.domain.transaction.application.TransactionService;
 import com.natu.graalvm.domain.transaction.core.model.Transaction;
 import com.natu.graalvm.domain.user.core.model.Balance;
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -30,7 +33,7 @@ public class UserService {
 
     public Map<String, BigDecimal> computePnl(String userAddress) {
         User user = retrieveUser.handle(userAddress);
-        List<Transaction> swapTxs = transactionService.retrieveTxs(user);
+        List<Transaction> swapTxs = transactionService.retrieveSwapTxs(userAddress);
         user.addSwapTransactions(swapTxs);
         User savedUser = alterUser.update(user);
 
@@ -39,10 +42,36 @@ public class UserService {
             // convert to BigDecimal to avoid overflow
             BigDecimal balance = new BigDecimal(entry.getValue().getBalance());
             BigDecimal inDecimal = balance.divide(new BigDecimal(10).pow(18));
-            pnl.put(entry.getKey(), inDecimal);
+            String symbol = findSymbol(entry.getKey(), user.getPairs());
+
+            pnl.put(symbol, inDecimal);
         }
 
 
         return pnl;
+    }
+
+    private String findSymbol(String contract, List<Pair> pairs) {
+        for (Pair pair : pairs) {
+            if (pair.getToken0().getAddress().equals(contract)) {
+                return pair.getToken0().getSymbol();
+            } else if (pair.getToken1().getAddress().equals(contract)) {
+                return pair.getToken1().getSymbol();
+            }
+        }
+        throw new NotFoundException("Symbol not found");
+    }
+
+    public void fetchTransactions(String userAddress) {
+        transactionService.addNewTransactionFromBlockchain(userAddress);
+    }
+
+    public void addLogToTransaction(String userAddress) {
+        transactionService.addLogToUserTransactions(userAddress);
+    }
+
+    public void addPairToUser(String userAddress) {
+        Set<String> pairs = transactionService.retrievePairs(userAddress);
+        alterUser.addPairs(userAddress, pairs);
     }
 }

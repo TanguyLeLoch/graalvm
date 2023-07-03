@@ -5,6 +5,7 @@ import com.natu.graalvm.domain.user.core.model.UserInfraMongo;
 import com.natu.graalvm.domain.user.core.port.outgoing.RetrievePair;
 import com.natu.graalvm.domain.user.core.port.outgoing.UserDatabase;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserDatabaseAdapter implements UserDatabase {
@@ -32,6 +33,7 @@ public class UserDatabaseAdapter implements UserDatabase {
         return userInfraMongoSaved.toDomain(retrievePair);
     }
 
+
     @Override
     public User insert(User user) {
         UserInfraMongo userInfraMongo = new UserInfraMongo(user);
@@ -43,6 +45,16 @@ public class UserDatabaseAdapter implements UserDatabase {
     public User addPair(User user, String pairAddress) {
         UserInfraMongo userInfraMongo = new UserInfraMongo(user);
         userInfraMongo.addPair(pairAddress);
+        UserInfraMongo saved = repository.update(userInfraMongo);
+        return saved.toDomain(retrievePair);
+    }
+
+    @Override
+    public User addPairs(User user, List<String> pairsToAdd) {
+        UserInfraMongo userInfraMongo = new UserInfraMongo(user);
+        for (String pairAddress : pairsToAdd) {
+            userInfraMongo.addPair(pairAddress);
+        }
         UserInfraMongo saved = repository.update(userInfraMongo);
         return saved.toDomain(retrievePair);
     }

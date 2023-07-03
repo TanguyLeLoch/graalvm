@@ -73,7 +73,7 @@ public class User {
                 return pair;
             }
         }
-        throw new NotFoundException("Pair {} not found", address);
+        throw new NotFoundException("Pair %s not found", address);
     }
 
 

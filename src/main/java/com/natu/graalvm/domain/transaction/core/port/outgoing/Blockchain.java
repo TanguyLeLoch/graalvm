@@ -8,5 +8,5 @@ import java.util.List;
 public interface Blockchain {
     List<Transaction> getTransactions(String address);
 
-    List<Log> getTransactionLogs(String contractAddress, List<String> topics);
+    List<Log> getTransactionLogs(String txHash);
 }

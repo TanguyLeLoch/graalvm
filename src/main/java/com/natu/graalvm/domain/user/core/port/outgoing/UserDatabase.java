@@ -2,6 +2,7 @@ package com.natu.graalvm.domain.user.core.port.outgoing;
 
 import com.natu.graalvm.domain.user.core.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDatabase {
@@ -14,4 +15,6 @@ public interface UserDatabase {
     Optional<User> findByAddress(String address);
 
     User removePair(User user, String pairAddress);
+
+    User addPairs(User user, List<String> pairsToAdd);
 }
